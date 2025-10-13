@@ -34,18 +34,19 @@ countries = {
         "coordinates": (64.1470, -21.9408),
         "region": "Northern Europe",
         "landmarks": ["Blue Lagoon", "Hallgrímskirkja", "Gullfoss Waterfall"]
-    }
+    },
     "peru": {
         "capital": "Lima",
-        "coordinates": (-12.0467,-77.0431),
+        "coordinates": (-12.0467, -77.0431),
         "region": "South America",
         "landmarks": ["Machu Picchu", "Nazca Lines", "Saqsaywaman"]
-    }
+    },
     "japan": {
         "capital": "Tokyo",
         "coordinates": (-35.6764, 139.6500),
         "region": "East Asia",
         "landmarks": ["Mount Fuji", "Fushimi Inari Shrine", "Senso-ji"]
+    },
     "greece": {
         "capital": "Athens",
         "coordinates": (37.9838, 23.7275),
