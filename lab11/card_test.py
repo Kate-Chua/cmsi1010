@@ -1,5 +1,5 @@
 import pytest
-from card import Card
+from card import Card, standard_deck, shuffled_deck, deal_one_five_card_hand
 
 
 def test_valid_cards():
@@ -39,3 +39,35 @@ def test_cards_are_truly_immutable():
         card.rank = 5
     with pytest.raises(AttributeError):
         card.dog = "dog"
+
+
+def test_standard_deck():
+    deck = standard_deck()
+    assert isinstance(deck, list)
+    assert len(deck) == 52
+    assert all(isinstance(card, Card) for card in deck)
+    deck_as_string = ''.join(str(card) for card in deck)
+    assert deck_as_string == (
+        "A♠2♠3♠4♠5♠6♠7♠8♠9♠10♠J♠Q♠K♠"
+        "A♥2♥3♥4♥5♥6♥7♥8♥9♥10♥J♥Q♥K♥"
+        "A♦2♦3♦4♦5♦6♦7♦8♦9♦10♦J♦Q♦K♦"
+        "A♣2♣3♣4♣5♣6♣7♣8♣9♣10♣J♣Q♣K♣")
+
+
+def test_shuffled_deck():
+    deck = standard_deck()
+    assert isinstance(deck, list)
+    assert len(deck) == 52
+    shuffled = shuffled_deck()
+    assert isinstance(shuffled, list)
+    assert len(shuffled) == 52
+    for suit in "SHDC":
+        for rank in range(1, 14):
+            assert Card(suit, rank) in shuffled
+
+
+def test_deal_one_five_card_hand():
+    hand = deal_one_five_card_hand()
+    assert isinstance(hand, set)
+    assert len(hand) == 5
+    assert all(isinstance(card, Card) for card in hand)
