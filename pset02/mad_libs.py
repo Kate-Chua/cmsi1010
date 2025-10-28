@@ -1,43 +1,55 @@
-# ----------------------------------------------------------------------
-# This is the file mad_libs.py
-#
-# The intent is to give you practice writing a complete, interactive
-# Python program using a lot of Python data types, especially lists,
-# sets, and dictionaries.
-#
-# Remove ALL of the existing comments in this file prior to submission.
-# You can, and should, add your own comments, but please remove all the
-# comments that are here now.
-#
-# Things to do:
-#
-# Define a bunch of templates in which some of the words begin with a colon (:).
-# The words that begin with a colon are the words that you will ask the user
-# to fill in. An example of a template is:
-#
-#     "The :color :animal :action over the :adjective :plant."
-#
-# You should define a list of at least 10 templates. Be creative!
-#
-# Your app should begin by selecting a random template. Then, for each word
-# that begins with a colon in the template, prompt the user for a word
-# that fits the description. Make sure that their input is between 1 and 30
-# characters long, to prevent them from making too much of a mess of things.
-#
-# After the user has filled in all of the words, print the completed
-# template with the user's words filled in. Then after a blank line, print
-# a line crediting the author of the template. Then, print a couple of blank
-# lines and ask them if they want to play again. If they say "yes" (or "sí"
-# or "oui") or any acceptable version of an affirmative answer, start over
-# with a new random template. Otherwise, say "no", print "Thanks for playing!"
-# and exit the program.
-#
-# Here are some constraints:
-#
-#   1. The templates should be a list of dictionaries, in which each entry
-#      has a "text" fields and an "author" field. The "text" field should
-#      contain the template string, and the "author" field should contain
-#      the name of the person who wrote the template.
-#
-#   2. The possible "yes" answers should be stored in a set.
-# ----------------------------------------------------------------------
+import random
+
+# I chatGPTed the templates for the mad libs game
+templates = [
+    {"text": "The :adjective :animal :verb over the :color :object.", "author": "Kate"},
+    {"text": "A :profession always carries a :item while :verb-ing.", "author": "Sam"},
+    {"text": "Never trust a :adjective :creature who loves :food too much.", "author": "Luis"},
+    {"text": "My :relative told me that :place has :number hidden treasures.", "author": "Ava"},
+    {"text": "The :color spaceship landed on a :adjective planet full of :animal.", "author": "Milo"},
+    {"text": "Every morning, a :adjective :animal drinks :drink before sunrise.",
+        "author": "Raya"},
+    {"text": "Legend says the :object will grant :number wishes to a :person.",
+        "author": "Toby"},
+    {"text": "I once saw a :animal wearing a :clothing while :verb-ing loudly.",
+        "author": "Nico"},
+    {"text": "A :person and a :animal started a band called ':adjective Beats'.",
+        "author": "June"},
+    {"text": "Beware of the :adjective :monster that eats only :food and :drink.", "author": "Lena"}
+]
+
+yes_answers = {"yes", "y", "yeah", "sure", "si", "sí", "oui", "ok", "okay"}
+
+
+def fill_template(template):
+    words = template.split()
+    replacements = {}
+    for i, word in enumerate(words):
+        if word.startswith(":"):
+            label = word.strip(".,!?")
+            if label not in replacements:
+                while True:
+                    user_input = input(f"Enter a {label[1:]}: ")
+                    if 1 <= len(user_input) <= 30:
+                        break
+                    print("Please enter between 1 and 30 characters.")
+                replacements[label] = user_input
+    for label, replacement in replacements.items():
+        template = template.replace(label, replacement)
+    return template
+
+
+def play():
+    while True:
+        chosen = random.choice(templates)
+        final_story = fill_template(chosen["text"])
+        print("\n" + final_story)
+        print(f"\nAuthor: {chosen['author']}\n")
+        again = input("Play again? ").strip().lower()
+        if again not in yes_answers:
+            print("Thanks for playing!")
+            break
+
+
+if __name__ == "__main__":
+    play()
