@@ -3,12 +3,12 @@ Based on an original JavaScript implementation by Max Halford
 at https://maxhalford.github.io/blog/mondrian/
 """
 
-import random
 import pygame
+import random
 
 pygame.init()
-WIDTH, HEIGHT = 800, 600
-screen = pygame.display.set_mode((WIDTH, HEIGHT))
+screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+WIDTH, HEIGHT = screen.get_size()
 pygame.display.set_caption("Mondrian")
 
 COLORS = [
