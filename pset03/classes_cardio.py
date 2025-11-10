@@ -1,10 +1,5 @@
 import math
 
-# Write a class called Rectangle, with attributes with and height,
-# and methods to calculate the area and perimeter. The class should
-# also have a __str__ method that returns a string representation
-# in a form you can infer from the unit tests below.
-
 
 class Rectangle:
     def __init__(self, width, height):
@@ -15,40 +10,54 @@ class Rectangle:
         return self.width * self.height
 
     def perimeter(self):
-        return self.width * 2 + self.height * 2
+        return 2 * (self.width + self.height)
 
     def __str__(self):
         return f"Rectangle({self.width} x {self.height})"
 
-# Write a class called Circle, with an attribute radius,
-# and methods to calculate the area and circumference.
-# Implement the __str__ method according to the unit tests
-# below.
 
-# ...
+class Circle:
+    def __init__(self, radius):
+        self.radius = radius
 
+    def area(self):
+        return math.pi * self.radius ** 2
 
-# Write a class called Song, with attributes title, artist, and
-# duration. The duration should be in seconds. The class should
-# have a __str__ method that returns a string representation
-# according the unit tests below, and a method called play that
-# prints a message inferrable from the unit tests below.
+    def circumference(self):
+        return 2 * math.pi * self.radius
 
-# ...
+    def __str__(self):
+        return f"Circle(radius={self.radius})"
 
 
-# Write a class called Playlist, which contains a list of Song
-# objects. The class should have methods to add a song, play all
-# songs, and a __str__ method that returns a string representation
-# of the playlist, with each song represented as "title by artist
-# (duration)s" and separated by a pipe character (|). If the playlist
-# is empty, the __str__ method should return "Playlist is empty."
+class Song:
+    def __init__(self, title, artist, duration):
+        self.title = title
+        self.artist = artist
+        self.duration = duration
 
-# ...
+    def __str__(self):
+        return f"{self.title} by {self.artist} ({self.duration}s)"
 
-# Keep the following tests in your file. Use them as you do the work
-# in this assignment. (And remember to remove this comment before
-# submission.)
+    def play(self):
+        print(f"Playing {self.title} by {self.artist} ({self.duration}s)")
+
+
+class Playlist:
+    def __init__(self):
+        self.songs = []
+
+    def add_song(self, song):
+        self.songs.append(song)
+
+    def play_all(self):
+        for song in self.songs:
+            song.play()
+
+    def __str__(self):
+        if not self.songs:
+            return "Playlist is empty."
+        return "|".join(str(song) for song in self.songs)
 
 
 def test_rectangle():
@@ -60,8 +69,8 @@ def test_rectangle():
 
 def test_circle():
     circle = Circle(5)
-    assert circle.area() == 25*math.pi
-    assert circle.circumference() == 10*math.pi
+    assert circle.area() == 25 * math.pi
+    assert circle.circumference() == 10 * math.pi
     assert str(circle) == "Circle(radius=5)"
 
 
@@ -70,9 +79,7 @@ def test_song(capfd):
     assert str(song) == "Night Shift by Lucy Dacus (391s)"
     song.play()
     captured_output = capfd.readouterr()
-    assert captured_output.out == (
-        "Playing Night Shift by Lucy Dacus (391s)\n"
-    )
+    assert captured_output.out == "Playing Night Shift by Lucy Dacus (391s)\n"
 
 
 def test_playlist(capfd):
